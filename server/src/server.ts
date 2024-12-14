@@ -4,6 +4,7 @@ import cors from "cors"
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import dbConnection from './database/dbConnection';
 
 
 dotenv.config();
@@ -25,4 +26,5 @@ res.json(`Server is running on Port:${process.env.PORT}`)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  dbConnection();
 });
