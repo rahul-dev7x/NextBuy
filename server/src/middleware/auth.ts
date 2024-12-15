@@ -15,7 +15,7 @@ interface DecodedToken {
 
 const auth = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const token = req.cookies.accessToken || req?.headers?.authorization?.split(" ")[1];
+        const token = req.cookies?.accessToken || req?.headers?.authorization?.split(" ")[1];
         if(!token)
         {
             res.status(401).json({message:"Token is not available",success:false,error:true})

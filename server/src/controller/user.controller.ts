@@ -5,7 +5,9 @@ import sendEmail from "../config/sendEmail";
 import verifyEmailTemplate from "../utills/verifyEmailTemplate";
 import generateAccessToken from "../utills/generateAccessToken";
 import generateRefreshToken from "../utills/generateRefreshToken";
-
+import dataUri from "datauri/parser"
+import path from "path";
+import cloudinary from "../config/cloudinary";
 
 
 
@@ -152,8 +154,43 @@ return res.status(200).json({message:"User Logged Out Success",success:true,erro
 }
 }
 
+const dUri=new dataUri();
+const uploadAvatar=async(req:Request,res:Response)=>{
+    try{
+        const file = req.file;
+        if(!file) {
+            return res.status(400).json({message: "File is not available", success: false, error: true});
+        }
+       //console.log(file)
+       const fileData = dUri.format(path.extname(file.originalname).toString(), file.buffer);
+       //console.log(fileData);
+       if(!fileData || !fileData.content) {
+        return res.status(400).json({
+            message: "File Content is not available", success: false, error: true
+        });
+       }
+       const result=await cloudinary.uploader.upload(fileData.content,{
+        folder:"Avatars"
+       })
+       //console.log(result);
+       const avatarUrl=result.secure_url;
+       const userid=req.userId;
+       const user=await UserModel.findByIdAndUpdate(userid,{avatar:avatarUrl},{new:true});
+       console.log(user?.avatar)
+       return res.status(200).json({
+        message: "Avatar uploaded successfully",
+        avatar: avatarUrl,
+        success: true,
+      });
+    }
+    catch(err)
+    {
+        return res.status(500).json({message:"Something error while uploading profile img",error:true,success:false})
+    }
+}
 
 
 
 
-export { registerUser ,verifyEmailController,loginUser,logoutUser};
+
+export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar};

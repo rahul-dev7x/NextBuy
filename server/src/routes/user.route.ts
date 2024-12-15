@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
-import { loginUser, logoutUser, registerUser, verifyEmailController } from "../controller/user.controller";
+import { loginUser, logoutUser, registerUser, uploadAvatar, verifyEmailController } from "../controller/user.controller";
 import auth from "../middleware/auth";
+import upload from "../middleware/multer";
 
 
 
@@ -22,6 +23,9 @@ route.post("/login",(req:Request,res:Response)=>{
 route.get("/logout",auth,(req:Request,res:Response)=>{
     logoutUser(req,res)
 });
+route.put("/upload-avatar",auth,upload.single('avatar'),(req:Request,res:Response)=>{
+    uploadAvatar(req,res)
+})
 
 
 export default route;
