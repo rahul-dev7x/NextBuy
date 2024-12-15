@@ -8,6 +8,9 @@ import generateRefreshToken from "../utills/generateRefreshToken";
 import dataUri from "datauri/parser"
 import path from "path";
 import cloudinary from "../config/cloudinary";
+import generateOtp from "../utills/generateOtp";
+import verifyForgetPasswordTemplate from "../utills/verifyForgetPasswordlTemplate";
+
 
 
 
@@ -216,6 +219,36 @@ return res.status(200).json({message:"User Details Updated Successfully",success
 }
 
 
+const forgetPassword=async(req:Request,res:Response)=>{
+    try{
+const {email}=req.body;
+const user=await UserModel.findOne({email});
+if(!user)
+{
+    return res.status(400).json({message:"Email is Not registered",success:false,error:true});
+}
+const otp = generateOtp();
+const expiryTime = new Date(Date.now() + 60 * 60 * 1000);
+const update = await UserModel.findByIdAndUpdate(user._id, {
+    forgot_password_otp: otp,
+    forgot_password_expiry: expiryTime
+});
+await sendEmail({
+    sendTo: email,
+    subject: "Forgot Password From Next Buy",
+    html: verifyForgetPasswordTemplate({name:user.name,otp:otp})
+});
+return res.status(200).json({message: "OTP sent successfully", success: true, error: false});
+    }
+    catch(err)
+    {
+        console.log(err)
+        return res.status(500).json({message:"Error while forgot password",success:false,error:true})
+    }
+}
 
 
-export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails};
+
+
+
+export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword};

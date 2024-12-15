@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { loginUser, logoutUser, registerUser, updateUserDetails, uploadAvatar, verifyEmailController } from "../controller/user.controller";
+import { forgetPassword, loginUser, logoutUser, registerUser, updateUserDetails, uploadAvatar, verifyEmailController } from "../controller/user.controller";
 import auth from "../middleware/auth";
 import upload from "../middleware/multer";
 
@@ -28,6 +28,9 @@ route.put("/upload-avatar",auth,upload.single('avatar'),(req:Request,res:Respons
 })
 route.put("/update-user",auth,(req:Request,res:Response)=>{
     updateUserDetails(req,res);
+});
+route.put("/forgot-password",(req:Request,res:Response)=>{
+    forgetPassword(req,res)
 })
 
 export default route;

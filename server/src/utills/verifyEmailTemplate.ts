@@ -3,7 +3,7 @@ interface TemplateParams {
     url: string;
 }
 
-const verifyEmailTemplate = ({ name, url }: TemplateParams) => {
+const verifyEmailTemplate = ({ name, url}: TemplateParams) => {
     return `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; max-width: 600px; margin: auto;">
     <h2 style="color: #ff7f00; text-align: center;">Welcome to Binkeyit, ${name}!</h2>
