@@ -10,7 +10,7 @@ import path from "path";
 import cloudinary from "../config/cloudinary";
 import generateOtp from "../utills/generateOtp";
 import verifyForgetPasswordTemplate from "../utills/verifyForgetPasswordlTemplate";
-
+import jwt from "jsonwebtoken"
 
 
 
@@ -331,6 +331,62 @@ return res.json({
         return res.status(500).json({message:"err while reset password",success:false,error:true})
     }
 }
+const refreshToken=async(req:Request,res:Response)=>{
+    try {
+        const refreshToken = req.cookies.refreshToken || req?.headers?.authorization?.split(" ")[1]  /// [ Bearer token]
+
+        if(!refreshToken){
+            return res.status(401).json({
+                message : "Invalid token",
+                error  : true,
+                success : false
+            })
+        }
+
+        interface DecodedToken {
+            _id: string;
+        }
+
+        const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY as string) as DecodedToken;
+
+        if(!verifyToken){
+            return res.status(401).json({
+                message : "token is expired",
+                error : true,
+                success : false
+            })
+        }
+
+        const userId = verifyToken._id;
+
+        const newAccessToken = await generateAccessToken(userId)
+
+        const cookiesOption = {
+            httpOnly : true,
+            secure : true,
+            sameSite : "none" as const
+        }
+
+        res.cookie('accessToken',newAccessToken,cookiesOption)
+
+        return res.json({
+            message : "New Access token generated",
+            error : false,
+            success : true,
+            data : {
+                accessToken : newAccessToken
+            }
+        })
 
 
-export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword,verifyForgotPassword,resetPassword};
+    } catch (error) {
+        return res.status(500).json({
+            message : error,
+            error : true,
+            success : false
+        })
+    }
+}
+
+
+export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword,verifyForgotPassword,resetPassword,refreshToken};
