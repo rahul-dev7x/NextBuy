@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { registerUser, verifyEmailController } from "../controller/user.controller";
+import { loginUser, registerUser, verifyEmailController } from "../controller/user.controller";
 const route=express.Router();
 
 route.post("/register",(req:Request,res:Response)=>{
@@ -7,6 +7,10 @@ route.post("/register",(req:Request,res:Response)=>{
 });
 route.post("/verify-email",(req:Request,res:Response)=>{
     verifyEmailController(req,res)
+})
+
+route.post("/login",(req:Request,res:Response)=>{
+    loginUser(req,res)
 })
 
 
