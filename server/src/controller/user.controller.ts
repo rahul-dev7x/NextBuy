@@ -231,7 +231,7 @@ const otp = generateOtp();
 const expiryTime = new Date(Date.now() + 60 * 60 * 1000);
 const update = await UserModel.findByIdAndUpdate(user._id, {
     forgot_password_otp: otp,
-    forgot_password_expiry: expiryTime
+    forgot_password_expiry: expiryTime.toISOString()
 });
 await sendEmail({
     sendTo: email,
@@ -246,9 +246,55 @@ return res.status(200).json({message: "OTP sent successfully", success: true, er
         return res.status(500).json({message:"Error while forgot password",success:false,error:true})
     }
 }
+const verifyForgotPassword=async(req:Request,res:Response)=>{
+    try{
+const {email,otp}=req.body;
+if(!email || !otp){
+    return res.status(400).json({
+        message : "Provide required field email, otp.",
+        error : true,
+        success : false
+    })
+}
+
+const user=await UserModel.findOne({email});
+if(!user)
+    {
+        return res.status(400).json({
+            message : "User not available",
+            error : true,
+            success : false
+        })
+    }
+const currentTime = new Date();
+if(currentTime > new Date(user.forgot_password_expiry))
+{
+    return res.status(400).json({
+        message: "OTP is expired",
+        error: true,
+        success: false
+    });
+}
+if(otp !== user.forgot_password_otp){
+    return res.status(400).json({
+        message : "Invalid otp",
+        error : true,
+        success : false
+    })
+}
+const updateUser=await UserModel.findByIdAndUpdate(user._id,{orgot_password_otp : "",
+    forgot_password_expiry : ""})
+    return res.status(200).json({message:"Otp Verification Successful",success:true,error:false})
+}
+
+    catch(err)
+    {
+        return res.status(500).json({message:"err while verifying otp",success:false,error:true})
+    }
+}
 
 
 
 
 
-export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword};
+export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword,verifyForgotPassword};
