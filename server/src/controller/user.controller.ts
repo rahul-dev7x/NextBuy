@@ -294,7 +294,43 @@ const updateUser=await UserModel.findByIdAndUpdate(user._id,{orgot_password_otp 
 }
 
 
+const resetPassword=async(req:Request,res:Response)=>{
+    try{
+const {email,newPassword,confirmPassword}=req.body;
+if(!email || !newPassword || !confirmPassword)
+{
+    return res.status(400).json({message:"Please fill all the fields",success:false,error:true})
+}
+const user = await UserModel.findOne({ email })
+
+        if(!user){
+            return res.status(400).json({
+                message : "Email is not available",
+                error : true,
+                success : false
+            })
+        }
+
+        if(newPassword !== confirmPassword){
+            return res.status(400).json({
+                message : "newPassword and confirmPassword must be same.",
+                error : true,
+                success : false,
+            })
+        }
+        const hashedPasssword=await bcrypt.hash(newPassword,10);
+const update=await UserModel.findOneAndUpdate(user._id,{password:hashedPasssword});
+return res.json({
+    message : "Password updated successfully.",
+    error : false,
+    success : true
+})
+    }
+    catch(err)
+    {
+        return res.status(500).json({message:"err while reset password",success:false,error:true})
+    }
+}
 
 
-
-export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword,verifyForgotPassword};
+export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails,forgetPassword,verifyForgotPassword,resetPassword};
