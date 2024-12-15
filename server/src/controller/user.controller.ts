@@ -99,16 +99,19 @@ if(!matchedPassword)
 
 
 
-const accessToken=await generateAccessToken(user._id.toString());
- const refreshToken=await generateRefreshToken(user._id.toString());
- console.log(accessToken);
- console.log(refreshToken)
+const accessToken =await generateAccessToken(user._id.toString());
+const refreshToken =await generateRefreshToken(user._id.toString());
+// console.log("login time Token:",accessToken);
+//  console.log(refreshToken)
 
- const cookieOption={
-    httpOnly:true,secure:true,sameSite:"none" as const
- }
- res.cookie("accessToken",await accessToken,cookieOption);
- res.cookie("refreshToken",await refreshToken,cookieOption);
+const cookieOption = {
+    httpOnly: true,
+    secure: true,  
+    sameSite: "strict" as const
+};
+
+ res.cookie("accessToken",accessToken,cookieOption);
+ res.cookie("refreshToken",refreshToken,cookieOption);
  
 
 return res.status(200).json({
@@ -130,4 +133,52 @@ return res.status(200).json({
 
 
 
-export { registerUser ,verifyEmailController,loginUser};
+const logoutUser = async (req: Request, res: Response) => {
+    try {
+        
+        const userId = req.userId;
+        console.log("User ID:", userId);
+
+        if (!userId) {
+            return res.status(400).json({
+                message: "User ID not found",
+                success: false,
+                error: true
+            });
+        }
+
+        
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true,  
+            sameSite: "none" as const,  
+        
+        };
+
+        res.clearCookie("accessToken", cookieOptions);
+        res.clearCookie("refreshToken", cookieOptions);
+
+        
+        await UserModel.findByIdAndUpdate(userId, {
+            refresh_token: ""
+        });
+
+        return res.status(200).json({
+            message: "Logged out successfully",
+            success: true,
+            error: false
+        });
+    } catch (err) {
+        console.error("Error during logout:", err);
+        return res.status(500).json({
+            message: "Error while logging out",
+            error: true,
+            success: false
+        });
+    }
+};
+
+export default logoutUser;
+
+
+export { registerUser ,verifyEmailController,loginUser,logoutUser};

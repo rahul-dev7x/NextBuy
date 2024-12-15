@@ -25,6 +25,7 @@ res.json(`Server is running on Port:${process.env.PORT}`)
 app.use("/api/user",userRouter)
 
 
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   dbConnection();
