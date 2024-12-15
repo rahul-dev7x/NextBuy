@@ -191,6 +191,31 @@ const uploadAvatar=async(req:Request,res:Response)=>{
 
 
 
+const updateUserDetails=async(req:Request,res:Response)=>{
+    try{
+const {name,email,mobile,password}=req.body;
+const userid=req.userId;
+let hashedPassword="";
+if(password) {
+    hashedPassword = await bcrypt.hash(password, 10);
+}
+
+const updateUser=await UserModel.updateOne({_id:userid},{
+...(name && {name:name}),
+...(email && {email:email}),
+...(mobile && {mobile:mobile}),
+...(password && {password:hashedPassword})
+})
+return res.status(200).json({message:"User Details Updated Successfully",success:true,error:false})
+    }
+    catch(error)
+    {
+        console.log(error);
+        return res.status(500).json({message:"There is an error while updating",success:false,error:true})
+    }
+}
 
 
-export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar};
+
+
+export { registerUser ,verifyEmailController,loginUser,logoutUser,uploadAvatar,updateUserDetails};
