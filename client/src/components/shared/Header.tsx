@@ -8,8 +8,8 @@ import { Link } from "react-router-dom"
 const Header = () => {
     return (
         <>
-            <header className="h-20 shadow-md px-6 py-4 flex sticky bg-white top-0 z-50 mx-auto ">
-                <div className="flex justify-between items-center gap-5 w-full px-20">
+            <header className="h-20 shadow-md px-6 py-4 flex sticky bg-white top-0 z-50 mx-auto" >
+                <div className="flex justify-between items-center gap-5 w-full px-20 ">
                     {/* Logo Section */}
                     <Link to={"/"}>
                     
