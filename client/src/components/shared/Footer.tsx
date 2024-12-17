@@ -64,26 +64,26 @@ const Footer = () => {
                     ))}
 
                     {/* Newsletter */}
-                    
+
                     <div>
-  <h4 className="text-lg font-semibold text-gray-900 mb-4">Subscribe</h4>
-  <p className="text-sm mb-4 text-gray-700">
-    Stay updated with our latest products and offers. Subscribe to our newsletter!
-  </p>
-  <form className="flex shadow-md rounded-lg overflow-hidden">
-    <input
-      type="email"
-      placeholder="Enter your email"
-      className="flex-grow px-4 py-3 border-none bg-slate-100 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
-    />
-    <button
-      type="submit"
-      className="bg-teal-600 text-white px-5 py-3 hover:bg-teal-700 transition-all"
-    >
-      Subscribe
-    </button>
-  </form>
-</div>
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Subscribe</h4>
+                        <p className="text-sm mb-4 text-gray-700">
+                            Stay updated with our latest products and offers. Subscribe to our newsletter!
+                        </p>
+                        <form className="flex shadow-md rounded-lg overflow-hidden">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="flex-grow px-4 py-3 border-none bg-slate-100 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            />
+                            <button
+                                type="submit"
+                                className="bg-teal-600 text-white px-5 py-3 hover:bg-teal-700 transition-all"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
 
 
                     {/* Social Media */}
@@ -103,7 +103,7 @@ const Footer = () => {
                             ))}
                         </div>
                     </div>
-                    </div>
+                </div>
             </footer>
         </>
     )
