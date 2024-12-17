@@ -1,6 +1,7 @@
 import { AiOutlineLogin } from "react-icons/ai"
 import Search from "./Search"
-import { FaShoppingCart } from "react-icons/fa"
+
+import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom"
 
 
@@ -26,12 +27,12 @@ const Header = () => {
 
                     {/* Cart and Login Section */}
                     <div className="flex items-center gap-6 text-black-200 text-lg">
-                        <div className="flex items-center gap-2 cursor-pointer hover:text-yellow-300">
+                        <div className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
                             <AiOutlineLogin size={24}/>
                             <p>Login</p>
                         </div>
-                        <div className="flex items-center gap-2 cursor-pointer hover:text-yellow-300">
-                            <FaShoppingCart size={24}/>
+                        <div className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
+                            <IoCartOutline size={24}/>
                             <p>Cart</p>
                         </div>
 
