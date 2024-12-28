@@ -5,10 +5,12 @@ import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom"
 
 
+
 const Header = () => {
+    
     return (
         <>
-            <header className="h-20 shadow-md px-6 py-4 flex sticky bg-white top-0 z-50 mx-auto" >
+            <header className="h-20 shadow-md px-6 py-4 flex sticky bg-white top-0 z-50 mx-auto w-full min-w-[1222px]" >
                 <div className="flex justify-between items-center gap-5 w-full px-20 ">
                     {/* Logo Section */}
                     <Link to={"/"}>
@@ -27,10 +29,14 @@ const Header = () => {
 
                     {/* Cart and Login Section */}
                     <div className="flex items-center gap-6 text-black-200 text-lg">
+                        <Link to={"/login"}>
+                        
                         <div className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
                             <AiOutlineLogin size={24}/>
                             <p>Login</p>
                         </div>
+                        </Link>
+                        
                         <div className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
                             <IoCartOutline size={24}/>
                             <p>Cart</p>
@@ -38,6 +44,7 @@ const Header = () => {
 
 
                     </div>
+                    
                 </div>
 
             </header>

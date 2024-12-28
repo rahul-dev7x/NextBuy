@@ -282,7 +282,7 @@ if(otp !== user.forgot_password_otp){
         success : false
     })
 }
-const updateUser=await UserModel.findByIdAndUpdate(user._id,{orgot_password_otp : "",
+const updateUser=await UserModel.findByIdAndUpdate(user._id,{forgot_password_otp : "",
     forgot_password_expiry : ""})
     return res.status(200).json({message:"Otp Verification Successful",success:true,error:false})
 }
