@@ -79,6 +79,7 @@ const Login = () => {
               id="email"
               name="email"
               type="email"
+              autoFocus
               placeholder="johndoe@gmail.com"
               value={formData.email}
               onChange={handleChange}
@@ -86,7 +87,7 @@ const Login = () => {
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-1">
             <Label htmlFor="password" className="font-medium text-gray-700 text-sm">
               Password:
             </Label>
@@ -107,6 +108,9 @@ const Login = () => {
                 {passwordEye ? <FaEye /> : <FaRegEyeSlash />}
               </div>
             </div>
+          </div>
+          <div className="flex justify-end mb-2">
+            <p><Link to="/forgot-password">Forget Password?</Link></p>
           </div>
 
 

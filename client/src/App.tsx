@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import Header from "./components/shared/Header"
-import Footer from "./components/shared/Footer"
+//import Footer from "./components/shared/Footer"
 
 
 const App = () => {
@@ -11,7 +11,7 @@ const App = () => {
       <main className="min-h-[80vh]">
         <Outlet/>
       </main>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
     </>
   )
