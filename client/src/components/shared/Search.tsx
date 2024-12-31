@@ -1,4 +1,4 @@
-import { AiOutlineSearch } from 'react-icons/ai';
+ import { AiOutlineSearch } from 'react-icons/ai';
 import { TypeAnimation } from 'react-type-animation';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -51,3 +51,4 @@ const Search = () => {
 };
 
 export default Search;
+

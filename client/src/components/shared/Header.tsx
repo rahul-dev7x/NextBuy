@@ -1,55 +1,54 @@
-import { AiOutlineLogin } from "react-icons/ai"
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button"
 import Search from "./Search"
-
-import { IoCartOutline } from "react-icons/io5";
-import { Link } from "react-router-dom"
-
-
+import { FaCartArrowDown } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import DropDown from "./DropDown";
 
 const Header = () => {
-    
-    return (
-        <>
-            <header className="h-20 shadow-md px-6 py-4 flex sticky bg-white top-0 z-50 mx-auto w-full min-w-[1222px]" >
-                <div className="flex justify-between items-center gap-5 w-full px-20 ">
-                    {/* Logo Section */}
-                    <Link to={"/"}>
-                    
-                    <div className="text-2xl font-bold text-blue-500 ">
-                        <h2>Next<span className="text-yellow-300">Buy</span></h2>
-                    </div>
+  const {isAuthenticated,user}=useSelector(state=>state.auth);
+  console.log(user);
+  return (
+    <div className="w-full fixed top-0 shadow-md bg-white z-50">
+      <div className="flex justify-between items-center p-6">
+        {/* Logo */}
+        <div>
+          <Link to="/">
+            <h1 className="font-bold text-4xl text-gray-700">Plan<span className="text-4xl font-bold text-yellow-500">ora</span></h1>
 
-                    </Link>
-                    
-                    {/* Search Section */}
-                    <div className="">
+          </Link>
 
-                        <Search />
-                    </div>
+        </div>
+        {/* Search Section */}
+        <div>
+          <Search />
+        </div>
+        {/* logina aND CART */}
+        <div className="flex justify-between items-center gap-6">
+          <div>
+            {
+              isAuthenticated?(<DropDown user={user}/>):(
 
-                    {/* Cart and Login Section */}
-                    <div className="flex items-center gap-6 text-black-200 text-lg">
-                        <Link to={"/login"}>
-                        
-                        <div className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
-                            <AiOutlineLogin size={24}/>
-                            <p>Login</p>
-                        </div>
-                        </Link>
-                        
-                        <div className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
-                            <IoCartOutline size={24}/>
-                            <p>Cart</p>
-                        </div>
+<Link to="/login">
+            <Button className="text-white bg-cyan-500 hover:bg-cyan-600 px-4 py-2 text-xl font-semibold">Login</Button>
+            </Link>
+              )
+            }
+            
+          </div>
+          <div className="flex items-center gap-2 cursor-pointer">
+            <FaCartArrowDown size={28} />
+            <p className="font-bold text-2xl text-gray-900">Cart</p>
+          </div>
+
+        </div>
 
 
-                    </div>
-                    
-                </div>
 
-            </header>
-        </>
-    )
+      </div>
+
+    </div>
+  )
 }
 
 export default Header

@@ -24,6 +24,18 @@ const summaryApi={
     reset_password:{
         url:"/api/user/reset-password",
         method:"put"
+    },
+    logout:{
+        url:"/api/user/logout",
+        method:"get"
+    },
+    update_avatar:{
+        url:"/api/user/upload-avatar",
+        method:"put"
+    },
+    update_user:{
+        url:"/api/user/update-user",
+        method:"put"
     }
 }
 

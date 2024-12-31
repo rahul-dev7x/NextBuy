@@ -20,7 +20,7 @@ route.post("/verify-email",(req:Request,res:Response)=>{
 route.post("/login",(req:Request,res:Response)=>{
     loginUser(req,res)
 })
-route.get("/logout",auth,(req:Request,res:Response)=>{
+route.get("/logout",(req:Request,res:Response)=>{
     logoutUser(req,res)
 });
 route.put("/upload-avatar",auth,upload.single('avatar'),(req:Request,res:Response)=>{

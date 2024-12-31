@@ -8,11 +8,14 @@ import { toast } from "sonner";
 import Axios from "@/utills/Axios";
 import summaryApi from "@/common/SummaryApi";
 import AxiosError from "@/utills/AxiosError";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/auth-slice";
 
 const Login = () => {
   const navigate = useNavigate()
+  const dispatch=useDispatch()
+  
   const [formData, setFormData] = useState({
-
     email: "",
     password: "",
 
@@ -44,6 +47,7 @@ const Login = () => {
           email: "",
           password: ""
         })
+        dispatch(setUser(data.data.loginData))
         toast.success(data.message)
         navigate("/")
       }
@@ -134,4 +138,3 @@ const Login = () => {
 };
 
 export default Login;
-

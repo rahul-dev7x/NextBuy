@@ -165,4 +165,3 @@ Reset Password
 };
 
 export default ResetPassword;
-

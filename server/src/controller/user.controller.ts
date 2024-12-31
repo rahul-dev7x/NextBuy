@@ -109,7 +109,7 @@ const refreshToken =await generateRefreshToken(user._id.toString());
 
 const cookieOption = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',  
+    secure: true,  
     sameSite: 'none' as const
 };
 
@@ -117,6 +117,20 @@ const cookieOption = {
  res.cookie("accessToken",accessToken,cookieOption);
  res.cookie("refreshToken",refreshToken,cookieOption);
  
+const loginData={
+id:user._id,
+name:user.name,
+email:user.email,
+avatar:user.avatar,
+mobile:user.mobile,
+last_login_date:user.last_login_date,
+status:user.status,
+address:user.address_details,
+shopping_cart:user.shopping_cart,
+order_history:user.orderHistory,
+role:user.role
+
+}
 
 return res.status(200).json({
     message: `${user.name} Logged in successfully`,
@@ -124,7 +138,8 @@ return res.status(200).json({
     success: true,
     data: {
         accessToken,
-        refreshToken
+        refreshToken,
+        loginData
     }
 });
     }
@@ -198,6 +213,12 @@ const updateUserDetails=async(req:Request,res:Response)=>{
     try{
 const {name,email,mobile,password}=req.body;
 const userid=req.userId;
+const user=await UserModel.findOne({email});
+if(user && user._id.toString() !== userid)
+{
+    return res.status(400).json({message:"This email id is already registered with an account",success:false,error:true})
+}
+
 let hashedPassword="";
 if(password) {
     hashedPassword = await bcrypt.hash(password, 10);
@@ -209,7 +230,8 @@ const updateUser=await UserModel.updateOne({_id:userid},{
 ...(mobile && {mobile:mobile}),
 ...(password && {password:hashedPassword})
 })
-return res.status(200).json({message:"User Details Updated Successfully",success:true,error:false})
+const updatedUser=await UserModel.findById(userid).select("-password -forgot_password_otp -forgot_password_expiry")
+return res.status(200).json({message:"User Details Updated Successfully",success:true,error:false,updatedUser})
     }
     catch(error)
     {
