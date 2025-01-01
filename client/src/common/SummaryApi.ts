@@ -40,6 +40,14 @@ const summaryApi={
     create_category:{
         url:"/api/category/create-category",
         method:"post"
+    },
+    get_category:{
+        url:"/api/category/get-category",
+        method:"get"
+    },
+    update_category:{
+        url:"/api/category/update-category",
+        method:"put"
     }
 }
 

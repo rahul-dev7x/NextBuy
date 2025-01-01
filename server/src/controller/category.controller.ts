@@ -46,5 +46,76 @@ const createCategory=async(req:Request,res:Response)=>{
     }
 }
 
+const getCategory=async(req:Request,res:Response)=>{
+    try{
+        const category=await CategoryModel.find().sort({createdAt:-1});
+        return res.status(200).json({message:"Category Found success",success:true,error:false,data:category})
 
-export {createCategory}
+    }
+    catch(error){
+return res.status(500).json({message:"err while fetching all category",success:false,error:true})
+    }
+}
+
+const updateCategory = async (req: Request, res: Response) => {
+  try {
+    const { id, name } = req.body;
+    const file = req.file;
+
+    if (!id) {
+      return res.status(400).json({ message: "Category ID is required", success: false, error: true });
+    }
+
+    
+    const category = await CategoryModel.findById(id);
+    if (!category) {
+      return res.status(404).json({ message: "Category not found", success: false, error: true });
+    }
+
+   
+    let updatedUrl = category.image;  
+    if (file) {
+      const fileData = dUri.format(path.extname(file.originalname).toString(), file.buffer);
+
+      if (!fileData || !fileData.content) {
+        return res.status(400).json({
+          message: 'Invalid file content',
+          success: false,
+          error: true,
+        });
+      }
+
+      
+      const result = await cloudinary.uploader.upload(fileData.content, {
+        folder: 'Category',
+      });
+
+      updatedUrl = result.secure_url;  
+    }
+
+  
+    category.name = name || category.name;  
+    category.image = updatedUrl;  
+
+    await category.save(); 
+
+   
+    return res.status(200).json({
+      message: 'Category updated successfully',
+      success: true,
+      error: false,
+      data: category, 
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: 'Error while updating category',
+      success: false,
+      error: true,
+    });
+  }
+};
+
+
+export {createCategory,getCategory,updateCategory}
