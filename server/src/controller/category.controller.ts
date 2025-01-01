@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import dataUri from "datauri/parser"
 import path from 'path';
@@ -118,4 +117,30 @@ const updateCategory = async (req: Request, res: Response) => {
 };
 
 
-export {createCategory,getCategory,updateCategory}
+const deleteCategory=async(req:Request,res:Response)=>{
+  try{
+const {_id}=req.body;
+console.log(req.body)
+if(!_id)
+{
+  return res.status(400).json({message:"category Id is required",success:false,error:true})
+}
+const category=await CategoryModel.findById(_id);
+if(!category)
+{
+  return res.status(404).json({ message: "Category not found", success: false, error: true });
+}
+await CategoryModel.deleteOne({ _id: _id });
+return res.status(200).json({
+  message: 'Category deleted successfully',
+  success:true,error:false
+});
+  }
+  catch(error)
+  {
+    return res.status(500).json({message:"err while deleting category",success:false,error:true})
+  }
+}
+
+
+export {createCategory,getCategory,updateCategory,deleteCategory}

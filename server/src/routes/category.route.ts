@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import auth from "../middleware/auth";
 import upload from "../middleware/multer";
-import { createCategory, getCategory, updateCategory } from "../controller/category.controller";
+import { createCategory, deleteCategory, getCategory, updateCategory } from "../controller/category.controller";
 
 
 const route=express.Router();
@@ -16,6 +16,9 @@ route.get("/get-category",auth,(req:Request,res:Response)=>{
 })
 route.put("/update-category",auth,upload.single("image"),(req:Request,res:Response)=>{
     updateCategory(req,res)
+})
+route.delete("/delete-category",auth,(req:Request,res:Response)=>{
+    deleteCategory(req,res)
 })
 
 export default route;

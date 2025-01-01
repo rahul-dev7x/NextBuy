@@ -20,7 +20,9 @@ const Category = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [editData, setEditData] = useState(null);
-  console.log("edit_data",editData)
+  const [deleteData,setDeleteData]=useState(null)
+  console.log("edit_data",editData);
+  console.log("delete_data",deleteData)
 
   const fetchCategory = async () => {
     try {
@@ -74,7 +76,7 @@ const Category = () => {
                   </button>
                   <button
                     className="bg-red-700 px-2 text-white rounded"
-                    onClick={() => setIsDeleteOpen(true)}
+                    onClick={() => {setIsDeleteOpen(true);setDeleteData(item)}}
                   >
                     Delete
                   </button>
@@ -103,6 +105,7 @@ const Category = () => {
         {isDeleteOpen && (
           <DeleteCategory
             close={() => setIsDeleteOpen(false)}
+            deleteData={deleteData}
             fetchCategory={fetchCategory}
           />
         )}
