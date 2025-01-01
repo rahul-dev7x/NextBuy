@@ -6,6 +6,11 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import dbConnection from './database/dbConnection';
 import userRouter from "./routes/user.route"
+import categoryRouter from "./routes/category.route"
+
+
+
+
 
 dotenv.config();
 const app=express();
@@ -22,7 +27,8 @@ app.use(helmet({crossOriginResourcePolicy:false}));
 app.get("/",(_,res:Response)=>{
 res.json(`Server is running on Port:${process.env.PORT}`)
 })
-app.use("/api/user",userRouter)
+app.use("/api/user",userRouter);
+app.use("/api/category",categoryRouter)
 
 
 

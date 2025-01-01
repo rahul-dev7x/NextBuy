@@ -13,8 +13,8 @@ import { setUser } from "@/redux/auth-slice";
 
 const Login = () => {
   const navigate = useNavigate()
-  const dispatch=useDispatch()
-  
+  const dispatch = useDispatch()
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,10 +49,14 @@ const Login = () => {
         })
         dispatch(setUser(data.data.loginData))
         toast.success(data.message)
-        navigate("/")
+        if (data.data.loginData.role === "USER") {
+          navigate("/")
+        }
+        else {
+          navigate("/dashboard/category")
+        }
       }
-      else
-      {
+      else {
         toast.error(data.message);
       }
 

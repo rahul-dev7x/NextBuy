@@ -36,6 +36,10 @@ const summaryApi={
     update_user:{
         url:"/api/user/update-user",
         method:"put"
+    },
+    create_category:{
+        url:"/api/category/create-category",
+        method:"post"
     }
 }
 
