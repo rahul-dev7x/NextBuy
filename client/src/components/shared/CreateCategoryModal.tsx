@@ -12,7 +12,7 @@ import summaryApi from '@/common/SummaryApi';
 type CreateCategoryModalProps = {
     close: () => void;
 };
-const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({ close }) => {
+const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({ close,fetchCategory }) => {
     const [formData, setFormData] = useState<{
         category: string;
         category_image: File | null;
@@ -46,6 +46,7 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({ close }) => {
             if (data.success) {
                 toast.success(data.message);
                 close()
+                fetchCategory();
             }
             else {
                 toast.error(data.message)

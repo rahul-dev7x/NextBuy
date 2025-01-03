@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import dbConnection from './database/dbConnection';
 import userRouter from "./routes/user.route"
 import categoryRouter from "./routes/category.route"
-
+import subCategoryRouter from "./routes/subcategory.route"
 
 
 
@@ -28,7 +28,8 @@ app.get("/",(_,res:Response)=>{
 res.json(`Server is running on Port:${process.env.PORT}`)
 })
 app.use("/api/user",userRouter);
-app.use("/api/category",categoryRouter)
+app.use("/api/category",categoryRouter);
+app.use("/api/subcategory",subCategoryRouter)
 
 
 

@@ -12,12 +12,13 @@ import {
 import storage from "redux-persist/lib/storage";
 import authSlice from "./auth-slice";
 import categorySlice from "./category"
+import subCategorySlice from "./subcategory"
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
 };
-const rootReducer = combineReducers({auth:authSlice,category:categorySlice});
+const rootReducer = combineReducers({auth:authSlice,category:categorySlice,subcategory:subCategorySlice});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
