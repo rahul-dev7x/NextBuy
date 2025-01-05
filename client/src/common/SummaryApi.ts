@@ -69,6 +69,10 @@ const summaryApi = {
         url: "/api/subcategory/delete-subcategory",
         method: "delete"
 
+    },
+    upload_image:{
+        url:"/file/upload",
+        method:"post"
     }
 }
 

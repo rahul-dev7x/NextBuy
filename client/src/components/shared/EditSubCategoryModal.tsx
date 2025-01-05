@@ -19,17 +19,18 @@ import { toast } from 'sonner';
 import subcategory from '@/redux/subcategory';
 
 
-const EditSubCategoryModal = ({ close, editData,fetchSubCategory }) => {
+const EditSubCategoryModal = ({ close, editData, fetchSubCategory }) => {
   const categoryId = editData.category.map((cat) => cat._id);
   //console.log("categoryid",categoryId);
-  console.log("edit_data",editData)
+  console.log("edit_data", editData)
 
   const [data, setData] = useState({
     subCategoryName: editData.name || '',
-    subcategoryId:editData._id,
+    subcategoryId: editData._id,
     image: editData.image || null,
     categories: categoryId,
   });
+
 
 
 
@@ -67,33 +68,32 @@ const EditSubCategoryModal = ({ close, editData,fetchSubCategory }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData=new FormData();
-    
-      formData.append("name",data.subCategoryName);
-    
-    
-      
-        formData.append("categories",JSON.stringify(data.categories))
-      
-    
-    formData.append("id",data.subcategoryId)
-    
-    if(data.image)
-    {
-      formData.append("image",data.image)
+    const formData = new FormData();
+
+    formData.append("name", data.subCategoryName);
+
+
+
+    formData.append("categories", JSON.stringify(data.categories))
+
+
+    formData.append("id", data.subcategoryId)
+
+    if (data.image) {
+      formData.append("image", data.image)
     }
     try {
-      const response=await Axios({...summaryApi.update_subcategory,data:formData});
+      const response = await Axios({ ...summaryApi.update_subcategory, data: formData });
       //console.log(response)
-      const data=response.data;
-      if(data.success){
+      const data = response.data;
+      if (data.success) {
         toast.success(data.message)
         close();
         fetchSubCategory()
       }
-      else{
+      else {
         toast.error(data.message)
-              }
+      }
 
     }
     catch (error) {
@@ -129,8 +129,8 @@ const EditSubCategoryModal = ({ close, editData,fetchSubCategory }) => {
                         typeof data.image === 'string'
                           ? data.image
                           : data.image instanceof File
-                          ? URL.createObjectURL(data.image)
-                          : ''
+                            ? URL.createObjectURL(data.image)
+                            : ''
                       }
                       alt='subcategory-image'
                       className='object-cover w-24 h-24'
@@ -175,11 +175,10 @@ const EditSubCategoryModal = ({ close, editData,fetchSubCategory }) => {
                     {category.map((cat, index) => (
                       <Button
                         key={index}
-                        className={`${
-                          data.categories.includes(cat._id)
+                        className={`${data.categories.includes(cat._id)
                             ? 'bg-blue-700'
                             : 'bg-gray-500'
-                        }`}
+                          }`}
                         onClick={() => handleCategorySelect(cat._id)}
                       >
                         {cat.name}

@@ -8,7 +8,7 @@ import dbConnection from './database/dbConnection';
 import userRouter from "./routes/user.route"
 import categoryRouter from "./routes/category.route"
 import subCategoryRouter from "./routes/subcategory.route"
-
+import uploadRouter from "./routes/uploadimage.routes"
 
 
 
@@ -29,7 +29,8 @@ res.json(`Server is running on Port:${process.env.PORT}`)
 })
 app.use("/api/user",userRouter);
 app.use("/api/category",categoryRouter);
-app.use("/api/subcategory",subCategoryRouter)
+app.use("/api/subcategory",subCategoryRouter);
+app.use("/file",uploadRouter)
 
 
 
