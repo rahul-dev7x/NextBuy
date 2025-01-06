@@ -9,6 +9,10 @@ import { useSelector } from 'react-redux';
 import { RxCross2 } from "react-icons/rx";
 import { Button } from '@/components/ui/button';
 import AddField from '@/components/shared/AddField';
+import AxiosError from '@/utills/AxiosError';
+import Axios from '@/utills/Axios';
+import summaryApi from '@/common/SummaryApi';
+import { toast } from 'sonner';
 const UploadProduct = () => {
   const [data, setData] = useState({
     name: "",
@@ -110,6 +114,37 @@ const UploadProduct = () => {
   }
 
 
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    try{
+      const response=await Axios({...summaryApi.upload_product,data:data})
+const apiData=response.data;
+if(apiData.success)
+{
+  toast.success(apiData.message)
+  setData({
+    name : "",
+    image : [],
+    category : [],
+    subCategory : [],
+    unit : "",
+    stock : "",
+    price : "",
+    discount : "",
+    description : "",
+    more_details : {},
+  })
+
+}
+    }
+    catch(error)
+    {
+      AxiosError(error);
+    }
+
+  }
+
+
 
   return (
     <section className="">
@@ -117,7 +152,7 @@ const UploadProduct = () => {
         <h2 className="font-semibold text-center">Upload Product</h2>
       </div>
       <div className='mt-4 bg-white shadow-md rounded flex'>
-        <form className='flex-col space-y-4 p-6 '>
+        <form className='flex-col space-y-4 p-6 ' onSubmit={handleSubmit}>
           <div className='min-w-[600px] bg-white'>
             <Label htmlFor='name'>Name:</Label>
             <Input type='text' id='name' name='name' placeholder='Enter Product Name' value={data.name} onChange={handleChange} className='mt-2 w-full' />
@@ -269,8 +304,8 @@ const UploadProduct = () => {
           </div>
           {/* Stock */}
           <div>
-            <Label>Stcok:</Label>
-            <Input type='text' name="stock" value={data.stock} />
+            <Label>Stock:</Label>
+            <Input type='text' name="stock" value={data.stock} onChange={handleChange}/>
 
           </div>
           {/* Price */}
@@ -310,7 +345,7 @@ const UploadProduct = () => {
             <Button className='bg-blue-500 transition ease-in-out duration-200 hover:bg-white hover:text-blue-600 hover:border-2 hover:outline-none font-semibold text-sm' onClick={() => setIsOpen(true)}>Add More Field</Button>
           </div>
 
-
+<Button>Submit</Button>
         </form>
         {
           isOpen && (

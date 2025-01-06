@@ -73,6 +73,14 @@ const summaryApi = {
     upload_image:{
         url:"/file/upload",
         method:"post"
+    },
+    upload_product:{
+        url:"/api/product/upload-product",
+        method:"post"
+    },
+    get_product:{
+        url:"/api/product/get",
+        method:"post"
     }
 }
 
