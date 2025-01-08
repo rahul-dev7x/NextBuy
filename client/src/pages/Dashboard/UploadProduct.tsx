@@ -56,6 +56,7 @@ const UploadProduct = () => {
     if (!file) {
       return
     }
+    //console.log(file)
     setIsLoading(true)
     const response = await uploadImage(file);
     console.log(response);

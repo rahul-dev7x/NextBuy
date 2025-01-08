@@ -12,7 +12,7 @@ import uploadRouter from "./routes/uploadimage.routes"
 import productRouter from "./routes/product.routes"
 
 
-dotenv.config();
+dotenv.config({});
 const app=express();
 
 const PORT = process.env.PORT || 5000;

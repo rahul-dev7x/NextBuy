@@ -10,6 +10,7 @@ const dUri=new dataUri();
 const uploadImage = async (req: Request, res: Response)=> {
     try {
         const file=req.file;
+        console.log(req.file)
         if(!file)
         {
             return res.status(400).json({message:"Please Upload File",success:true,error:false})

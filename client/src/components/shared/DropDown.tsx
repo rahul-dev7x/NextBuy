@@ -45,13 +45,13 @@ const DropDown = ({ user }) => {
 
           <Avatar>
             <AvatarImage src={user?.avatar || <CgProfile />} />
-            <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{user?.name.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
 
 
         </DropdownMenuTrigger>
         <DropdownMenuContent >
-          <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+          <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" onClick={()=>navigate("/profile/edit")}>My Profile</DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer"><p onClick={handleLogout}>Logout</p></DropdownMenuItem>
