@@ -18,6 +18,7 @@ interface SubCatData {
 const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
   const { category } = useSelector((state: any) => state.category);  // Type your state properly
   console.log(category);
+  const [loading,setLoading]=useState(false);
 
   const [subCatData, setSubCatData] = useState<SubCatData>({
     subcategory: '',
@@ -60,15 +61,19 @@ const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
     subCatData.categories.forEach(category => {
         formdata.append("categories", category);
     });
-    console.log("formdata",formdata)
+    //console.log("formdata",formdata)
+  
     try{
+      setLoading(true)
       const response=await Axios({...summaryApi.create_subcategory,data:formdata})
+      
       const data=response.data;
       if(data.success)
       {
         toast.success(data.message);
         close()
-        fetchSubCategory()
+        fetchSubCategory();
+        
       }
       else{
        toast.error(data.message)
@@ -79,11 +84,14 @@ const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
     {
       AxiosError(error)
     }
+    finally{
+      setLoading(false);
+    }
     
   };
 
   return (
-    <div className='fixed bg-black bg-opacity-50 inset-0 flex justify-center items-center'>
+    <div className='fixed  bg-opacity-50 inset-0 flex justify-center items-center bg-black'>
       <div className='w-[400px] bg-white p-6 shadow-md rounded-lg'>
         <div className='flex justify-between items-center'>
           <h1>Create Subcategory</h1>
@@ -130,7 +138,7 @@ const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
             {/* Categories */}
             <div>
               <Label>Categories:</Label>
-              <div className='flex flex-wrap gap-2 mt-2'>
+              <div className='flex flex-wrap gap-2 mt-2  overflow-y-scroll scroll-smooth h-64 w-full p-6 shadow-md rounded-sm'>
                 {category.map((cat: any) => (
                   <Button
                     key={cat._id}
@@ -173,13 +181,19 @@ const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
               </div>
             )}
 
-            <Button
-              className='w-full mt-4 bg-gray-800'
-              disabled={!subCatData.subcategory || subCatData.categories.length === 0}
-              type='submit'
-            >
-              Submit
-            </Button>
+<Button
+ className='w-full'
+  disabled={!subCatData.subcategory || subCatData.categories.length === 0 || loading}
+  type="submit"
+  
+>
+  {loading ? (
+   ".....Loading"
+  ) : (
+    'Submit'
+  )}
+</Button>
+
           </div>
         </form>
       </div>
