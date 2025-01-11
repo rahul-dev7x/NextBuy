@@ -17,7 +17,7 @@ const [search,setSearch]=useState("")
     try{
       const response=await Axios({...summaryApi.get_product,data:{
         page:page,
-        limit:2,
+        limit:10,
         search
       }
       })

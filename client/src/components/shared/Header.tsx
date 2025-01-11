@@ -9,7 +9,7 @@ const Header = () => {
   const {isAuthenticated,user}=useSelector(state=>state.auth);
   console.log(user);
   return (
-    <div className="w-full fixed top-0 shadow-md bg-white z-50">
+    <div className="w-full fixed top-0 shadow-md bg-white z-50 ">
       <div className="flex justify-between items-center p-6">
         {/* Logo */}
         <div>

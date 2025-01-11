@@ -222,7 +222,7 @@ if(apiData.success)
                     })
                   }
 
-                }}>
+                }} value={data.category}>
                   <option value={""}>Select Category</option>
                   {
                     category.map((c, index) => {
@@ -270,7 +270,7 @@ if(apiData.success)
                     })
                   }
 
-                }}>
+                }} value={data.subCategory}>
                   <option value={""}>Select SubCategory</option>
                   {
                     subCategory.map((sub, index) => {
