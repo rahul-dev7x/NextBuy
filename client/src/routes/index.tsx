@@ -14,6 +14,7 @@ import Category from "@/pages/Dashboard/Category";
 import SubCategory from "@/pages/Dashboard/SubCategory";
 import UploadProduct from "@/pages/Dashboard/UploadProduct";
 import Product from "@/pages/Dashboard/Product";
+import ProductListPage from "@/components/shared/ProductListPage";
 
 
 
@@ -86,6 +87,15 @@ const router=createBrowserRouter([
             {
                 path:"product",
                 element:<Product/>
+            }
+        ]
+    },
+    {
+        path:":category",
+        children:[
+            {
+                path:":subcategory",
+                element:<ProductListPage/>
             }
         ]
     }
