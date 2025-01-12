@@ -104,4 +104,28 @@ const getProduct = async (req: Request, res: Response): Promise<Response> => {
 
 
 
-export {addProduct,getProduct}
+const getProductsByCategory=async(req:Request,res:Response)=>{
+  try{
+    const {id}=req.body;
+    if(!id)
+    {
+      return res.status(400).json({message:"Please provide id",sucess:false,error:true})
+    }
+    const products=await ProductModel.find({
+      category:{$in:id}
+    }).limit(15);
+    //console.log(products)
+    return res.status(200).json({message:"Product found success",success:true,error:false,data:products})
+
+  }
+  catch(error)
+  {
+    return res.status(500).json({message:"There is an error while trying to find products by category",success:false,error:true})
+  }
+}
+
+
+
+
+
+export {addProduct,getProduct,getProductsByCategory}
