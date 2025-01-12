@@ -127,5 +127,42 @@ const getProductsByCategory=async(req:Request,res:Response)=>{
 
 
 
+const getProductByCategoryAndSubCategory=async(req:Request,res:Response)=>{
+  try{
+    const {categoryId,subCategoryId}=req.body;
+    if(!categoryId
+    )
+    {
+      return res.status(400).json({message:"Please provide Catgroyid",success:false,error:true})
+    }
+    if(!subCategoryId)
+    {
+      return res.status(400).json({message:"Please Provide subcategoryid",success:false,error:true})
+    }
 
-export {addProduct,getProduct,getProductsByCategory}
+    const query = {
+      category : { $in :categoryId  },
+      subCategory : { $in : subCategoryId }
+  }
+  //console.log("Query:", query);
+    const products=await ProductModel.find(query);
+    // if (products.length === 0) {
+    //   return res.status(404).json({
+    //     message: "No products found",
+    //     success: false,
+    //     error: true,
+    //   });
+    // }
+    return res.status(200).json({message:"Products found success",success:true,error:false,data:products})
+
+  }
+  catch(error)
+  {
+return res.status(500).json({message:"There is an error ",success:false,error:true})
+  }
+}
+
+
+
+
+export {addProduct,getProduct,getProductsByCategory,getProductByCategoryAndSubCategory}

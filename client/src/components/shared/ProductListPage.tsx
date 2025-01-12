@@ -3,6 +3,10 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Header from './Header';
 import { createReadableUrl } from '@/utills/readableUrl';
+import Axios from '@/utills/Axios';
+import summaryApi from '@/common/SummaryApi';
+import AxiosError from '@/utills/AxiosError';
+import CardProduct from './CardProduct';
 
 
 const ProductListPage = () => {
@@ -13,7 +17,7 @@ const ProductListPage = () => {
   console.log("subcategory", allSubCategory)
 
   const [displaySubCategory, setDisplaySubCategory] = useState([])
-
+const [productData,setProductData]=useState([])
 
 
 
@@ -27,6 +31,29 @@ const ProductListPage = () => {
 
   console.log("display_sub_category", displaySubCategory)
 
+
+const fetchProducts=async()=>{
+  try{
+    const response=await Axios({...summaryApi.get_product_by_category_and_subcategory,data:{
+      categoryId:categoryId,
+      subCategoryId:subCategoryId
+    }})
+   // console.log("response",response)
+   if(response.data.success)
+   {
+    setProductData(response.data.data)
+   }
+
+  }
+  catch(error)
+  {
+AxiosError(error)
+  }
+}
+
+useEffect(()=>{
+fetchProducts()
+},[params])
 
   useEffect(() => {
     const sub = allSubCategory.filter(s => {
@@ -72,8 +99,15 @@ const ProductListPage = () => {
           <div className='p-4 shadow-md mb-6 font-bold text-xl'>
             {subCategoryName}
           </div>
-          <div>
-            proddd
+          <div className=' grid grid-cols-3 gap-4'>
+            {
+              productData.map((p,index)=>{
+                return(
+                  
+                  <CardProduct data={p} key={index}/>
+                )
+              })
+            }
           </div>
 
 

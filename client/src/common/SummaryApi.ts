@@ -85,6 +85,10 @@ const summaryApi = {
     get_product_by_category:{
         url:"/api/product/get-product-by-category",
         method:"post"
+    },
+    get_product_by_category_and_subcategory:{
+        url:"/api/product/get-product-by-category-and-subcategory",
+        method:"post"
     }
 }
 
