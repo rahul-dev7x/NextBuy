@@ -15,6 +15,7 @@ import SubCategory from "@/pages/Dashboard/SubCategory";
 import UploadProduct from "@/pages/Dashboard/UploadProduct";
 import Product from "@/pages/Dashboard/Product";
 import ProductListPage from "@/components/shared/ProductListPage";
+import ProductDisplay from "@/components/shared/ProductDisplay";
 
 
 
@@ -98,6 +99,10 @@ const router=createBrowserRouter([
                 element:<ProductListPage/>
             }
         ]
+    },
+    {
+        path:"/product/:product",
+        element:<ProductDisplay/>
     }
 ])
 export default router;

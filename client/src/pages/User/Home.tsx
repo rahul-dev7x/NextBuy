@@ -22,7 +22,7 @@ const Home = () => {
     //console.log(subcategory)
     const url = `${createReadableUrl(name)}-${id}/${createReadableUrl(subcategory.name)}-${subcategory._id}`;
     navigate(url)
-    console.log(url)
+    //console.log(url)
   }
   return (
     <section>

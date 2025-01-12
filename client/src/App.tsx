@@ -30,7 +30,7 @@ const App = () => {
   const fetchSubCategory=async()=>{
     try{
       const response=await Axios({...summaryApi.all_subcategory})
-      console.log("fetch_all_subc",response);
+      //("fetch_all_subc",response);
       if(response.data.success)
       {
         dispatch(setSubCategory(response.data.data))

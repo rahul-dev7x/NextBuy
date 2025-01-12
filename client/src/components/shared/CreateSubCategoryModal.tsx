@@ -17,7 +17,7 @@ interface SubCatData {
 
 const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
   const { category } = useSelector((state: any) => state.category);  // Type your state properly
-  console.log(category);
+  //console.log(category);
   const [loading,setLoading]=useState(false);
 
   const [subCatData, setSubCatData] = useState<SubCatData>({
@@ -26,7 +26,7 @@ const CreateSubCategoryModal = ({ close,fetchSubCategory }) => {
     categories: [],
   });
 
-  console.log(subCatData);
+  //console.log(subCatData);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setSubCatData({ ...subCatData, image: file });

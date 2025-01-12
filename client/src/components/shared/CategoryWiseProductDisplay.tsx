@@ -10,7 +10,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 const CategoryWiseProductDisplay = ({ id, name }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false)
-    console.log("data", data)
+    //console.log("data", data)
     const containerRef = useRef()
 
     const fetchProducts = async () => {
@@ -21,7 +21,7 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
                     id: id
                 }
             })
-            console.log("response", response)
+            //console.log("response", response)
             if (response.data.success) {
                 setData(response.data.data)
             }

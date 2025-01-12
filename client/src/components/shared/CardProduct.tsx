@@ -1,8 +1,11 @@
+import { createReadableUrl } from '@/utills/readableUrl';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CardProduct = ({ data }) => {
+  const url=`/product/${createReadableUrl(data.name)}-${data._id}`
   return (
-    <div className="p-4 border rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer min-w-[400px]  ">
+    <Link to={url} className="p-4 border rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer min-w-[400px] ">
   
       <div className="h-32 w-full rounded-md  bg-gray-100">
         <img
@@ -28,7 +31,7 @@ const CardProduct = ({ data }) => {
           Add
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 
